@@ -43,14 +43,30 @@ gulp.task("html",function(){
 });
 
 // 压缩js
-gulp.task("js",function(){
-	gulp.src("src/js/**/*.js")
-		.pipe(uglify())
-		.pipe(rename({
-			suffix:".min"
-		}))
-		.pipe(gulp.dest("dist/js"));
-		
+// gulp.task("js",function(){
+// 	gulp.src("src/js/**/*.js")
+// 		.pipe(uglify())
+// 		.pipe(rename({
+// 			suffix:".min"
+// 		}))
+// 		.pipe(gulp.dest("dist/js"));
+
+// });
+
+// 编写一个打包工具
+	// gulp.task("js",function(){
+	// 	browserify("src/js/index.js").bundle()
+	// 		.pipe(source("index.js"))
+	// 		.pipe(buffer())
+	// 		.pipe(gulp(gulp.dest("dist/js")));
+	// });
+
+gulp.task('js', function() {
+    browserify('src/js/index.js').bundle() // 打包index.js
+        .pipe(source('index.js'))
+        .pipe(buffer())
+        // .pipe(uglify())
+        .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task("default",function(){
