@@ -18,6 +18,8 @@ var source = require('vinyl-source-stream'); // 这个包可以把普通的数�
 
 var buffer = require('vinyl-buffer'); // 这个是把vinyl对象文件中的数据转为buffer方式存储
 
+var htmlReplace = require('gulp-html-replace');
+
 //1.编译less，编译后的结果进行压缩
 gulp.task("less",function(){
 	gulp.src("src/less/*.less")
@@ -32,7 +34,12 @@ gulp.task("less",function(){
 
 // 2.压缩html
 gulp.task("html",function(){
-	gulp.src("src/**/*.html")
+    gulp.src(["src/**/*.html",'index.html'])
+        .pipe(htmlReplace({
+            style: gulp.src('src/html/common/style.html'),
+            aside: gulp.src('src/html/common/aside.html'),
+            header: gulp.src('src/html/common/header.html')
+        }))
 		.pipe(htmlmin({
 			collapseWhitespace:true,// 去掉空白字符
 			minifyJs:true,//压缩页面JS
